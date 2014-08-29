@@ -6,7 +6,13 @@ body {
   height: 100%; 
   width: 100%;
   margin: 0; 
-  padding: 50px;
+}
+
+header {
+  background: #2a5583;
+  color: white;
+  padding: 10px;
+  height: 60px;
 }
 
 h1 {
@@ -20,7 +26,7 @@ h3, .find-doctor {
 }
 
 #map-canvas { 
-  height: 80%; 
+  height: 70%; 
   width: 40%;
   float: left;
   margin: 20px;
@@ -30,7 +36,7 @@ h3, .find-doctor {
   width: 40%;
   padding: 20px;
   margin: 20px 30px 20px;
-  height: 80%;
+  height: 65%;
   display: inline-block;
   background-color: #fff;
   border: 1px solid grey;
@@ -52,11 +58,18 @@ ol, li {
 
 .submit {
   width: 65px;
-  height: 38px;
-  color: black;
+  height: 37px;
+  color: white;
   border: 1px solid gray;
   border-radius: 3px;
-  background-color: skyblue;
+  background-color: #2a5583;
 }
 
+.submit:hover {
+  color: #2a5583;
+  background-color: #fff;
+}
 
+strong {
+ color: #2a5583; 
+}

@@ -5,7 +5,6 @@ var distanceArray = [];
 var markersArray = [];
 
 $(function () {
-
     function initialize() {
         var mapOptions = {
             center: new google.maps.LatLng(40.761581, -73.984938),
@@ -17,6 +16,7 @@ $(function () {
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 
+// Finds the information for all doctors in database.
     function fetchAllDoctors() {
         $.ajax({
             type: "GET",
@@ -30,22 +30,27 @@ $(function () {
         });
     }
 
+// Initializes the map with markers for all doctors in database.
     function placeAllMarkers() {
         for (var i = 0; i < addresses.length; i++) {
+
             var request = {
                 query: addresses[i]
             };
+
 
             service = new google.maps.places.PlacesService(map);
             service.textSearch(request, callback);
 
             function callback(results, status) {
+                console.log(status);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     var place = results[0];
                     var latitude = results[0].geometry.location.lat();
                     var longitude = results[0].geometry.location.lng();
                     var myLatlng = new google.maps.LatLng(latitude, longitude);
                     addressLatlngs.push(myLatlng);
+
                     var marker = new google.maps.Marker({
                         map: map,
                         position: myLatlng
@@ -57,12 +62,13 @@ $(function () {
     }
 
 
-
-$(document).on("submit", ".find-doctor", function(event){
+// Event listener for form submit.
+    $('.find-doctor').bind("submit", function (event) {
         event.preventDefault();
-        console.log("I was clicked!");
+        event.stopPropagation();
 
         $('.display-doctors').empty();
+        distanceArray.length = 0;
 
         var input = $('.address-input').val();
 
@@ -88,7 +94,7 @@ $(document).on("submit", ".find-doctor", function(event){
             }
         }
 
-
+        // Calculates the distance between inputted location and each location in database.
         function calcRoute(start, end, index) {
             var request = {
                 origin: start,
@@ -103,13 +109,13 @@ $(document).on("submit", ".find-doctor", function(event){
                     var distanceValue = result.routes[0].legs[0].distance.value;
                     distanceArray.push([parseInt(distanceValue), distanceMiles, index]);
                 }
-                if (distanceArray.length == addresses.length) {
+                if (distanceArray.length == addressLatlngs.length) {
                     displayDoctors();
                 }
             });
-
         }
 
+        // Displays the information for five nearest doctors and shows the markers for those locations on the map.
         function displayDoctors() {
             distanceArray.sort(function (a, b) {
                 return a[0] - b[0];
@@ -118,6 +124,10 @@ $(document).on("submit", ".find-doctor", function(event){
             distances = [];
             indexes = [];
             distanceMiles = [];
+
+            console.log(distanceArray);
+            console.log(addresses);
+
 
             for (var i = 0; i < distanceArray.length; i++) {
                 distances.push(distanceArray[i][0]);
@@ -129,27 +139,31 @@ $(document).on("submit", ".find-doctor", function(event){
 
             var fiveAddresses = [];
 
-            for (var i = 0; i < 5; i++) {
-                console.log(fiveAddresses);
-               if (fiveAddresses.contains(addresses[indexes[i]]) == nil) {
+            for (var i = 0; i < indexes.length; i++) {
+                console.log(addresses[indexes[i]]);
+                console.log(markersArray[indexes[i]]);
+                if (fiveAddresses.indexOf(addresses[indexes[i]]) == -1) {
                     fiveAddresses.push(addresses[indexes[i]]);
                     $('.display-doctors').append("<li>" + addresses[indexes[i]] + " is <strong>" + distanceMiles[i] + "</strong> away.</li>");
                     markersArray[indexes[i]].setMap(map);
+                    
+                   
+                }
+                if (fiveAddresses.length == 5) {
+                    break
                 }
             }
-
         }
     });
 
-function clearMarkers() {
-  setAllMap(null);
-}
+    function clearMarkers() {
+        setAllMap(null);
+    }
 
-function setAllMap(map) {
-  for (var i = 0; i < markersArray.length; i++) {
-    markersArray[i].setMap(map);
-  }
-}
-
+    function setAllMap(map) {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap(map);
+        }
+    }
 
 });
