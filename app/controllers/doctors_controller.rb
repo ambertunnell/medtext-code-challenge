@@ -5,7 +5,7 @@ class DoctorsController < ApplicationController
 
   def all
     @doctors = Doctor.all
-
+     
      render json: @doctors
   end
 

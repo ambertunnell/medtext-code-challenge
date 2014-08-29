@@ -10,9 +10,7 @@
 
 <%= yield %>
 
-  <%#= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyBM5Y3XY8WgpZVxJm8ntfQxKa9Tp-Kc82Y" %>
-    <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places" %>
+  <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places" %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-
 </body>
 </html>
