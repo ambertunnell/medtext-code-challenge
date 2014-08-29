@@ -2,4 +2,4 @@
 
 Basic Ruby on Rails app that finds the nearest doctors to an inputted location.
 
-Uses: Ruby, Javascript, GoogleMaps & GooglePlaces APIs
+Uses: HTML, CSS, Javascript, AJAX, Ruby, GoogleMaps & GooglePlaces APIs
