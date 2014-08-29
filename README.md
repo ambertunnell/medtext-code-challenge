@@ -8,4 +8,4 @@ Uses: HTML, CSS, Javascript, AJAX, Ruby, GoogleMaps & GooglePlaces APIs
 
 ## Screenshot
 
-![Alt text](../public/screenshot.png "Main Page")
+![Alt text](/public/screenshot.png "Main Page")
